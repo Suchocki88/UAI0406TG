@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 4.6: Why AI Can't Be "Neutral" - Teacher's Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            height: 1600px;
+            overflow-y: auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+        .lesson-info {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .nav-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0.4rem;
+            margin-top: 1rem;
+        }
+        .nav-buttons a {
+            display: block;
+            padding: 0.4rem 0.6rem;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            transition: background 0.2s;
+            border: 1px solid rgba(255,255,255,0.3);
+            text-align: center;
+        }
+        .nav-buttons a:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .content {
+            padding: 2rem;
+        }
+        .section {
+            margin-bottom: 3rem;
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .section h4 {
+            color: #555;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .tip-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .script-box {
+            background: #fafafa;
+            border: 2px solid #ddd;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        .script-label {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-style: normal;
+            font-weight: bold;
+        }
+        .teacher-note {
+            background: #fff9c4;
+            border-left: 4px solid #fbc02d;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        .objectives-list {
+            margin: 1rem 0;
+        }
+        .objectives-list ul, .objectives-list ol {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+        }
+        .objectives-list li {
+            margin: 0.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #ddd;
+        }
+        table tr:hover {
+            background: #f5f5f5;
+        }
+        .timeline {
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        .timeline-time {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 0.9rem;
+        }
+        .timeline-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .timeline-content li {
+            margin: 0.3rem 0;
+        }
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .material-card {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        .material-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .material-card ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        .print-button:hover {
+            background: #45a049;
+        }
+        .scenario-card {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+        }
+        .scenario-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        .answer-key {
+            background: #e8f5e9;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .concept-box {
+            background: #e8eaf6;
+            border-left: 4px solid #3f51b5;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        @media print {
+            .print-button {
+                display: none;
+            }
+            .header {
+                position: relative;
+            }
+            .nav-buttons {
+                display: none;
+            }
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚖️ Lesson 4.6: Why AI Can't Be "Neutral"</h1>
+            <div class="subtitle">Teacher's Guide | Lesson Day</div>
+            <div class="lesson-info">Chapter 4: AI Bias</div>
+            <div class="nav-buttons">
+                <a href="#overview">📋 Overview</a>
+                <a href="#objectives">🎯 Objectives</a>
+                <a href="#materials">📦 Materials</a>
+                <a href="#preparation">🔧 Preparation</a>
+                <a href="#lesson-flow">⏱️ Lesson Flow</a>
+                <a href="#facilitation">👨‍🏫 Facilitation</a>
+                <a href="#assessment">📊 Assessment</a>
+                <a href="#differentiation">♿ Support</a>
+                <a href="#challenges">🚧 Challenges</a>
+                <a href="#reflection">💭 Reflection</a>
+            </div>
+        </div>
+
+        <button class="print-button" onclick="window.print()">🖨️ Print Guide</button>
+
+        <div class="content">
+
+            <!-- OVERVIEW SECTION -->
+            <section id="overview" class="section">
+                <h2>📋 Lesson Overview</h2>
+                <div class="highlight-box">
+                    <h4>🎯 The Big Idea</h4>
+                    <p>Students consolidate understanding that AI systems inherently reflect the values, perspectives, and biases of their training data and creators. There is no such thing as "objective" or "neutral" AI. Every design choice—what data to include, how to weight sources, what counts as "good" output—embeds values. This lesson provides the theoretical framework explaining why bias is inevitable, not solvable.</p>
+                </div>
+
+                <h3>Why This Lesson Matters</h3>
+                <p>This is a synthesis lesson that brings together everything students have learned in Chapter 4. After exploring human bias (4.1), training data bias (4.2), hunting for bias (4.3), cultural assumptions (4.4), and experiencing hidden bias (4.5), students now develop the conceptual framework: AI cannot be neutral because all knowledge is situated, all tools reflect their makers' worldviews, and every "default" privileges someone's perspective.</p>
+
+                <div class="concept-box">
+                    <h4>🔑 Key Conceptual Shift</h4>
+                    <p>Students move from "AI has some biases we need to fix" to "AI cannot be neutral by design—our job is to be aware and work thoughtfully with this reality." This isn't cynicism; it's informed engagement.</p>
+                </div>
+
+                <div class="success-box">
+                    <h4>✅ Success Indicators</h4>
+                    <ul>
+                        <li>Students can explain why "neutral AI" is impossible, not just difficult</li>
+                        <li>Students can identify how developer decisions embed values in AI systems</li>
+                        <li>Students understand that AI "defaults" always privilege some perspective</li>
+                        <li>Students recognize that claiming neutrality obscures bias rather than eliminating it</li>
+                        <li>Students can apply critical evaluation to AI outputs as informed consumers</li>
+                    </ul>
+                </div>
+
+                <h3>Lesson Connections</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Lesson 4.1:</strong> Human cognitive biases exist in everyone—including AI creators</li>
+                        <li><strong>Lesson 4.2:</strong> Training data transfers human biases to AI systems</li>
+                        <li><strong>Lessons 4.3-4.4:</strong> Students discovered bias through hands-on experimentation</li>
+                        <li><strong>Lesson 4.5:</strong> Students experienced how AI can introduce bias into users</li>
+                        <li><strong>Lessons 4.7-4.8:</strong> Students will apply bias awareness to creative work and develop documentation frameworks</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- OBJECTIVES SECTION -->
+            <section id="objectives" class="section">
+                <h2>🎯 Learning Objectives</h2>
+
+                <h3>Content Knowledge</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will explain why AI systems cannot be truly neutral or objective</li>
+                        <li>Students will identify four types of developer decisions that embed values in AI (source selection, filtering, balancing, tuning goals)</li>
+                        <li>Students will define "defaults" as gap-fillers that reflect training data patterns</li>
+                        <li>Students will articulate how different foundation models (ChatGPT, Gemini, Claude) differ based on training choices</li>
+                    </ul>
+                </div>
+
+                <h3>Skills & Practices</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will analyze how incomplete prompts lead to biased outputs</li>
+                        <li>Students will evaluate AI outputs critically rather than accepting them uncritically</li>
+                        <li>Students will identify strategies for working productively with non-neutral AI</li>
+                    </ul>
+                </div>
+
+                <h3>Dispositions & Mindsets</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Students will approach AI as informed consumers rather than passive recipients</li>
+                        <li>Students will maintain productive skepticism without descending into cynicism</li>
+                        <li>Students will recognize that awareness empowers better AI use</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- MATERIALS SECTION -->
+            <section id="materials" class="section">
+                <h2>📦 Materials</h2>
+                <div class="materials-grid">
+                    <div class="material-card">
+                        <h4>Teacher Materials</h4>
+                        <ul>
+                            <li>Projector for video: "Countering AI Bias"</li>
+                            <li>Whiteboard for developer decisions diagram</li>
+                            <li>This teacher's guide</li>
+                        </ul>
+                    </div>
+                    <div class="material-card">
+                        <h4>Student Materials</h4>
+                        <ul>
+                            <li>Field journal</li>
+                            <li>Lesson 4.6 student guide</li>
+                            <li>Pen/pencil</li>
+                        </ul>
+                    </div>
+                    <div class="material-card">
+                        <h4>Key Concepts to Display</h4>
+                        <ul>
+                            <li>Developer decisions: Sources, Filtering, Balancing, Tuning</li>
+                            <li>"Defaults aren't neutral—they're just easy to miss"</li>
+                            <li>Consumer strategies: Awareness, Adjustment, Iteration</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PREPARATION SECTION -->
+            <section id="preparation" class="section">
+                <h2>🔧 Preparation</h2>
+
+                <h3>Before Class</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Preview the "Countering AI Bias" video and note key timestamps</li>
+                        <li>Prepare to explain the four developer decisions with concrete examples</li>
+                        <li>Review students' experiences from Lessons 4.3-4.5 to reference during discussion</li>
+                        <li>Prepare examples of AI "defaults" (gendered pronouns, cultural assumptions)</li>
+                        <li>Anticipate resistance from STEM-oriented students who want to believe in objectivity</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Critical Preparation: The Objectivity Question</h4>
+                    <p>Some students—especially those with strong STEM identities—may resist the idea that objectivity is impossible. They want to believe in objective truth. Prepare to:</p>
+                    <ul>
+                        <li><strong>Acknowledge valid intuitions:</strong> Some things ARE factual (2+2=4, water boils at 100°C)</li>
+                        <li><strong>Distinguish facts from framing:</strong> Facts exist, but CHOOSING which facts to include, how to phrase them, and what to emphasize always involves human judgment</li>
+                        <li><strong>Avoid full relativism:</strong> Not all biases are equal; some cause real harm. The point isn't "everything is equally biased" but "awareness enables better choices"</li>
+                    </ul>
+                </div>
+
+                <h3>Room Setup</h3>
+                <p>Standard classroom arrangement. Ensure all students can see the video clearly. Consider having students sit with partners from previous lab activities to reference shared experiences.</p>
+            </section>
+
+            <!-- LESSON FLOW SECTION -->
+            <section id="lesson-flow" class="section">
+                <h2>⏱️ Lesson Flow (50 minutes)</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:00 - 0:05<br>(5 min)</div>
+                        <div class="timeline-content">
+                            <h4>Opening: The Neutrality Assumption</h4>
+                            <ul>
+                                <li>Pose the question: "When you first heard about AI, did you expect it to be neutral? Why or why not?"</li>
+                                <li>Quick pair-share (1 min)</li>
+                                <li>Harvest 2-3 responses</li>
+                                <li>Frame: "Today we're going to examine why the expectation of neutrality—while reasonable—doesn't match reality"</li>
+                            </ul>
+                            <div class="tip-box">
+                                <strong>Tip:</strong> Many students WILL have expected neutrality. Validate this: "It makes sense to expect a computer to be neutral—it doesn't have feelings or opinions. So why isn't it?"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:05 - 0:12<br>(7 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part I: Summary and Video</h4>
+                            <ul>
+                                <li>Brief review: "We've spent this chapter exploring how bias enters AI. Let's consolidate."</li>
+                                <li>Show video: "Countering AI Bias"</li>
+                                <li>Students note one new insight or question from the video</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:12 - 0:22<br>(10 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part II: Developer Decisions</h4>
+                            <ul>
+                                <li>Present the four types of developer decisions:
+                                    <ul>
+                                        <li><strong>Source selection:</strong> Which texts to include in training</li>
+                                        <li><strong>Filtering:</strong> What to remove or downplay</li>
+                                        <li><strong>Balancing:</strong> How to weight different styles and topics</li>
+                                        <li><strong>Tuning goals:</strong> What counts as "good" output</li>
+                                    </ul>
+                                </li>
+                                <li>Key analogy: "These choices guide AI the way a curriculum guides a student"</li>
+                                <li>Brief discussion: Why do different AI models (ChatGPT, Gemini, Claude) behave differently?</li>
+                            </ul>
+                            <div class="teacher-note">
+                                <strong>Note:</strong> Students may not realize that different AI systems have different "personalities." Point out that this is because of different training choices, not random variation.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:22 - 0:32<br>(10 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part III: Defaults and Gap-Filling</h4>
+                            <ul>
+                                <li>Core concept: When prompts are incomplete, AI fills gaps with training data patterns</li>
+                                <li>Connect to creative writing: "When you asked for a character without specifying details, what did AI assume?"</li>
+                                <li>Key insight: "Defaults aren't neutral—they're just easy to miss"</li>
+                                <li>Examples:
+                                    <ul>
+                                        <li>"Scientist" defaulting to male</li>
+                                        <li>"Classroom" defaulting to certain school types</li>
+                                        <li>"Family" defaulting to nuclear structure</li>
+                                    </ul>
+                                </li>
+                                <li>Discussion: "Whose patterns is it defaulting to?"</li>
+                            </ul>
+                            <div class="highlight-box">
+                                <strong>Key Point:</strong> This is where students connect their experiential learning (4.3-4.5) to theoretical understanding. Reference specific discoveries they made in lab activities.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:32 - 0:40<br>(8 min)</div>
+                        <div class="timeline-content">
+                            <h4>Part IV: So What Can We Do?</h4>
+                            <ul>
+                                <li>Transition: "If AI can't be neutral, should we stop using it? No!"</li>
+                                <li>Present consumer strategies:
+                                    <ul>
+                                        <li>Look for systems that are clear about strengths and weaknesses</li>
+                                        <li>Adjust prompts when output leans too heavily in one direction</li>
+                                        <li>Ask for different examples or viewpoints</li>
+                                        <li>Never mindlessly accept first output</li>
+                                    </ul>
+                                </li>
+                                <li>Empowerment message: "The best AI output is always iterative and human-directed"</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:40 - 0:47<br>(7 min)</div>
+                        <div class="timeline-content">
+                            <h4>Review Questions</h4>
+                            <ul>
+                                <li>Students complete review questions 1-4 (multiple choice)</li>
+                                <li>Quick check: Show of hands or polling for each question</li>
+                                <li>Address any misconceptions immediately</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-time">0:47 - 0:50<br>(3 min)</div>
+                        <div class="timeline-content">
+                            <h4>Closing: Short Answer and Preview</h4>
+                            <ul>
+                                <li>Students begin short answer question 5 (may complete for homework)</li>
+                                <li>Preview: "Tomorrow we'll apply this awareness to your creative writing projects—hunting for bias in AI's suggestions for YOUR stories"</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FACILITATION SECTION -->
+            <section id="facilitation" class="section">
+                <h2>👨‍🏫 Facilitation Guide</h2>
+
+                <h3>Opening Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "When people first hear about AI, it seems reasonable to expect a machine to stay neutral. A computer doesn't have personal experiences. It doesn't form opinions the way people do. So it makes sense to imagine its answers would come out balanced by default.<br><br>
+                    But here's what we've been discovering all chapter: neutrality depends on where information comes from. And AI draws everything it knows from human-created examples. The moment those examples enter the picture, the system begins learning patterns shaped by real human writing—with all its perspectives, assumptions, and blind spots.<br><br>
+                    Today we're going to put it all together: Why can't AI be neutral, and what do we do about it?"
+                </div>
+
+                <h3>Developer Decisions Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "Long before an AI begins generating answers, developers make decisions that determine what the system will learn. Think of these like choosing a curriculum for a student. The material you study influences the way you explain things later.<br><br>
+                    Developers decide: [Write on board as you go]<br>
+                    1. <strong>Which sources to include</strong>—science articles? textbooks? social media? fiction?<br>
+                    2. <strong>What to filter out</strong>—corrupted text, unreliable sources, offensive content<br>
+                    3. <strong>How to balance</strong>—more formal writing or casual? which topics get more representation?<br>
+                    4. <strong>What 'good' looks like</strong>—should it favor clarity or brevity? detailed or concise?<br><br>
+                    Every one of these decisions embeds values. There's no 'neutral' choice. Even choosing to include everything is a choice that favors whoever created the most content."
+                </div>
+
+                <h3>Defaults Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "Here's where it gets personal. When you give AI an incomplete prompt—and no prompt is ever perfectly complete—it fills in the blanks. But what does it fill them with?<br><br>
+                    Think back to your creative writing experiments. When you asked for a character without specifying much detail, what did AI suggest? When you requested a scene, what assumptions appeared that you never mentioned?<br><br>
+                    The AI fills those blanks with patterns from millions of examples written by particular people, in particular places, with particular assumptions. We call these the AI's 'defaults.'<br><br>
+                    And here's the key insight: [Write on board] <strong>'Defaults aren't neutral—they're just easy to miss.'</strong><br><br>
+                    When someone claims AI is 'objective,' ask yourself: whose patterns is it defaulting to? Whose 'normal' is it assuming?"
+                </div>
+
+                <h3>Empowerment Script</h3>
+                <div class="script-box">
+                    <div class="script-label">SAY</div>
+                    "So if AI can't be neutral, should we give up on it? Absolutely not.<br><br>
+                    Understanding this makes you a better AI user, not a worse one. Here's what informed consumers do:<br>
+                    • They look for AI systems that are honest about their limitations<br>
+                    • They adjust their prompts when output leans too heavily in one direction<br>
+                    • They ask for different examples or viewpoints<br>
+                    • They never mindlessly accept the first output<br><br>
+                    The moral of the story: the best output from any AI is always iterative and human-directed. Your job isn't to find a 'neutral' AI—it's to work thoughtfully with AI that, like all tools, reflects the perspectives of its makers."
+                </div>
+
+                <h3>Handling the Objectivity Question</h3>
+                <div class="script-box">
+                    <div class="script-label">IF STUDENTS ASK: "But aren't some things just objectively true?"</div>
+                    "Great question—and yes, absolutely. 2+2=4. Water boils at 100°C at sea level. The moon orbits the Earth. Facts exist.<br><br>
+                    But here's the thing: AI doesn't just state facts. It chooses WHICH facts to include, HOW to phrase them, what EXAMPLES to use, and what to EMPHASIZE. Those choices always involve human judgment.<br><br>
+                    Even a 'just the facts' response requires deciding which facts are relevant—and that's never neutral. The question isn't whether facts exist; it's whether any presentation of facts can be free from perspective. And the answer is: not entirely."
+                </div>
+            </section>
+
+            <!-- ASSESSMENT SECTION -->
+            <section id="assessment" class="section">
+                <h2>📊 Assessment</h2>
+
+                <h3>Formative Assessment (During Lesson)</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Opening discussion:</strong> Do students recognize the gap between expectation (neutrality) and reality?</li>
+                        <li><strong>Developer decisions:</strong> Can students explain how each type of decision embeds values?</li>
+                        <li><strong>Defaults discussion:</strong> Can students connect "defaults" to their creative writing experiences?</li>
+                        <li><strong>Consumer strategies:</strong> Do students understand the empowerment message?</li>
+                    </ul>
+                </div>
+
+                <h3>Review Questions (Built into Lesson)</h3>
+
+                <div class="scenario-card">
+                    <h4>Question 1</h4>
+                    <p>An AI system cannot be truly neutral, even though it doesn't have personal opinions, because AI systems</p>
+                    <p>A) are programmed by developers who intentionally insert their political views<br>
+                    B) learn patterns from human-created text, which reflects the perspectives of its authors<br>
+                    C) are designed to be biased so they can be more persuasive<br>
+                    D) have developed their own preferences through repeated use</p>
+                    <div class="answer-key"><strong>Answer: B</strong> – AI learns from human-created text that inherently reflects human perspectives</div>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Question 2</h4>
+                    <p>When you give AI an incomplete prompt, it fills in the blanks using</p>
+                    <p>A) random guesses to keep its responses interesting<br>
+                    B) patterns that appeared frequently in its training data<br>
+                    C) information it gathers about you from the internet<br>
+                    D) logical reasoning about what you probably meant</p>
+                    <div class="answer-key"><strong>Answer: B</strong> – AI defaults to frequent patterns from training data</div>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Question 3</h4>
+                    <p>Why does AI writing often sound generic or rely on clichés?</p>
+                    <p>A) AI is programmed to use simple language so everyone can understand it<br>
+                    B) AI deliberately avoids original phrasing to prevent copyright issues<br>
+                    C) Phrases that appeared often in training data become the AI's default choices<br>
+                    D) AI hasn't been updated with newer, fresher ways of writing</p>
+                    <div class="answer-key"><strong>Answer: C</strong> – High-frequency patterns become defaults</div>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Question 4</h4>
+                    <p>Which of the following is the best approach when using AI as a consumer?</p>
+                    <p>A) Trust the AI's first response since it draws from millions of examples<br>
+                    B) Avoid using AI for any task where bias might be a concern<br>
+                    C) Assume all foundation models produce the same results<br>
+                    D) Evaluate AI output critically and guide the AI when its defaults are too narrow</p>
+                    <div class="answer-key"><strong>Answer: D</strong> – Critical evaluation and iteration are key</div>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Question 5 (Short Answer)</h4>
+                    <p>A classmate claims that AI must be objective because "it's just a computer—it doesn't have feelings or opinions like humans do." Using what you learned in this lesson, explain why this reasoning is flawed. Include at least one specific example of how bias can enter an AI system.</p>
+                    <div class="answer-key"><strong>Sample response:</strong> While AI doesn't have feelings or opinions, it learns everything from human-created text that reflects human perspectives. Developers make choices about what data to include, what to filter out, and what "good" output looks like—all of these embed human values. For example, if training data contains mostly stories where doctors are referred to as "he" and nurses as "she," the AI learns these associations and reproduces them in its outputs. The AI isn't choosing to be biased, but it's learning biased patterns from human-created sources. Objectivity would require data created without any human perspective, which doesn't exist.</div>
+                </div>
+
+                <h3>Field Journal Assessment</h3>
+                <table>
+                    <tr>
+                        <th>Points</th>
+                        <th>Criteria</th>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Clearly explains why neutrality is impossible; identifies specific developer decisions that embed values; applies "defaults" concept to examples; articulates consumer strategies</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Explains neutrality limitation; identifies some developer decisions; understands defaults concept; shows basic consumer awareness</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Partial understanding of neutrality concept; limited connection to developer decisions or defaults</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Minimal engagement; does not demonstrate understanding of core concepts</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- DIFFERENTIATION SECTION -->
+            <section id="differentiation" class="section">
+                <h2>♿ Differentiation & Support</h2>
+
+                <h3>For Students Who Need More Support</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Provide graphic organizer showing: Developer Decisions → Training Data → AI Behavior → User Output</li>
+                        <li>Use concrete examples from their own creative writing lab experiences</li>
+                        <li>Offer sentence starters: "AI can't be neutral because..." / "One example of an AI default is..."</li>
+                        <li>Pair with peers who can explain concepts in different words</li>
+                    </ul>
+                </div>
+
+                <h3>For Advanced Learners</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Challenge: "If you were designing an AI, what choices would YOU make? What values would those embed?"</li>
+                        <li>Explore: "What would 'fair' AI look like if neutral AI is impossible?"</li>
+                        <li>Research: Compare how different AI companies describe their approach to bias</li>
+                        <li>Philosophy extension: "Is true objectivity possible for ANY source of information, human or AI?"</li>
+                    </ul>
+                </div>
+
+                <h3>For English Language Learners</h3>
+                <div class="objectives-list">
+                    <ul>
+                        <li>Pre-teach: neutral, objective, default, embed, foundation model</li>
+                        <li>Provide key concepts in written form alongside verbal explanation</li>
+                        <li>Use visual diagrams for developer decisions and gap-filling</li>
+                        <li>Allow discussion in home language during pair work</li>
+                    </ul>
+                </div>
+
+                <h3>For STEM-Oriented Students Who Resist the Concept</h3>
+                <div class="warning-box">
+                    <p>Some students may push back on the idea that objectivity is impossible. This is intellectually healthy skepticism. Address it directly:</p>
+                    <ul>
+                        <li>Validate: Facts exist, and some things are objectively true</li>
+                        <li>Distinguish: The issue is framing, selection, and emphasis—not whether facts exist</li>
+                        <li>Engage: "Can you think of a way to present information that doesn't involve any choices about what to include or emphasize?"</li>
+                        <li>Avoid: Full relativism ("nothing is true") or dismissing their concerns</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- CHALLENGES SECTION -->
+            <section id="challenges" class="section">
+                <h2>🚧 Anticipating Challenges</h2>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "But AI should just give us the facts!"</h4>
+                    <p><strong>Response:</strong> "Which facts? If you ask AI about climate change, should it include economic impacts? Health effects? Political debates? Historical context? Every 'factual' response requires deciding which facts are relevant—and that's never a neutral decision. The selection and framing always involve human judgment."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "So everything is biased and nothing matters?"</h4>
+                    <p><strong>Response:</strong> "Not at all! Recognizing that all systems have bias doesn't mean all biases are equal or that we should give up. Some biases cause real harm—like AI that works poorly for certain groups. The point isn't 'nothing matters' but 'awareness matters.' When you know bias exists, you can work with it thoughtfully instead of accepting everything uncritically."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "Why don't developers just use ALL the data so it's balanced?"</h4>
+                    <p><strong>Response:</strong> "Great question! Even 'all the data' isn't balanced—it reflects who creates the most content, in which languages, about which topics. English dominates the internet. Certain perspectives get published more often. 'Everything' still privileges whoever produces the most material. There's no way to include 'everything equally' because some perspectives have more representation than others in existing data."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: Students focus only on negative implications</h4>
+                    <p><strong>Response:</strong> "I hear concern in what you're saying, and that's understandable. But remember: understanding where bias comes from is the FIRST step to doing something about it. You're not helpless consumers—you're informed users who can adjust prompts, ask for different perspectives, and never accept first outputs uncritically. This knowledge is power, not paralysis."</p>
+                </div>
+
+                <div class="scenario-card">
+                    <h4>Challenge: "I tried different AI models and they give similar answers"</h4>
+                    <p><strong>Response:</strong> "For many common questions, that's true—they've been trained on overlapping data. But try more nuanced questions: ask about cultural practices, creative writing styles, or topics where perspectives differ. You'll start seeing how different training choices lead to different 'personalities.' The differences are real, even if they're subtle for straightforward questions."</p>
+                </div>
+            </section>
+
+            <!-- REFLECTION SECTION -->
+            <section id="reflection" class="section">
+                <h2>💭 Teacher Reflection</h2>
+
+                <p>After teaching this lesson, consider:</p>
+
+                <div class="objectives-list">
+                    <ul>
+                        <li><strong>Conceptual synthesis:</strong> Did students connect this lesson to their experiences in 4.3-4.5?</li>
+                        <li><strong>Objectivity debate:</strong> How did students respond to the claim that neutrality is impossible? Any productive pushback?</li>
+                        <li><strong>Empowerment vs. cynicism:</strong> Did students leave feeling informed and empowered, or discouraged and cynical?</li>
+                        <li><strong>Practical application:</strong> Can students articulate what they'll do differently as AI consumers?</li>
+                        <li><strong>Defaults concept:</strong> Did the "defaults aren't neutral" framing resonate?</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>Looking Ahead</h4>
+                    <p>Tomorrow (Lesson 4.7) students apply bias awareness to their creative writing projects—hunting for stereotypes in AI's character and plot suggestions. Today's conceptual framework should help them articulate WHY the biases they find exist, not just THAT they exist. Watch for students who may need extra support connecting today's theory to tomorrow's practice.</p>
+                </div>
+
+                <div class="success-box">
+                    <h4>Celebrate These Wins</h4>
+                    <ul>
+                        <li>Students who can explain why "neutral AI" is impossible (not just difficult)</li>
+                        <li>Productive intellectual debate about objectivity and facts</li>
+                        <li>Students connecting today's concepts to their lab experiences</li>
+                        <li>Students articulating consumer strategies in their own words</li>
+                        <li>Students expressing curiosity about applying this to their creative projects</li>
+                        <li>Balance of healthy skepticism without cynicism</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div><!-- End content -->
+    </div><!-- End container -->
+</body>
+</html>
